@@ -1,7 +1,9 @@
 #include<Servo.h>
 Servo myservo;
-int i = 0;
-int pos = 0;
+int aa=0;
+#define totales 9
+int caj[9]={0,0,0,0,0,0,0,0,0};
+
 #define pinservo  2
 #define boton     3
 #define sencajon1 5
@@ -62,78 +64,85 @@ void setup() {
   pinMode(ledrcajon9, OUTPUT);
   pinMode(ledvcajon9, OUTPUT);
   myservo.attach(pinservo);
+  myservo.write(90);
 }
 void loop() {
-  if (digitalRead(sencajon1) == LOW) {
+  if (digitalRead(boton)== LOW){
+    aa++;
+    myservo.write(0);
+    delay(3000);
+  }
+  if (digitalRead(13) == HIGH) {
     Serial.println("cajon 1 ocupado");
-    digitalWrite(22, HIGH);
-    digitalWrite(23, LOW);
+    digitalWrite(22,LOW);
+    digitalWrite(23,HIGH);
   } else {
-    digitalWrite(ledrcajon1, LOW);
-    digitalWrite(ledvcajon1, HIGH);
+    digitalWrite(22,HIGH);
+    digitalWrite(23,LOW);
   }
-  if (digitalRead(sencajon2) == LOW) {
+  if (digitalRead(12) == HIGH) {
     Serial.println("cajon 2 ocupado");
-    digitalWrite(ledrcajon2, HIGH);
-    digitalWrite(ledvcajon2, LOW);
+    
+    digitalWrite(24,LOW);
+    digitalWrite(25,HIGH);
   } else {
-    digitalWrite(ledrcajon2, LOW);
-    digitalWrite(ledvcajon2, HIGH);
+    digitalWrite(24,HIGH);
+    digitalWrite(25,LOW);
   }
-  if (digitalRead(sencajon3) == LOW) {
+  if (digitalRead(11) == HIGH) {
     Serial.println("cajon 3 ocupado");
-    digitalWrite(ledrcajon3, HIGH);
-    digitalWrite(ledvcajon3, LOW);
+    digitalWrite(26,LOW);
+    digitalWrite(27,HIGH);
   } else {
-    digitalWrite(ledrcajon3, LOW);
-    digitalWrite(ledvcajon3, HIGH);
+    digitalWrite(26,HIGH);
+    digitalWrite(27,LOW);
   }
-  if (digitalRead(sencajon4) == LOW) {
+  if (digitalRead(10) == HIGH) {
     Serial.println("cajon 4 ocupado");
-    digitalWrite(ledrcajon4, HIGH);
-    digitalWrite(ledvcajon4, LOW);
+    digitalWrite(28,LOW);
+    digitalWrite(29,HIGH);
   } else {
-    digitalWrite(ledrcajon4, LOW);
-    digitalWrite(ledvcajon4, HIGH);
+    digitalWrite(28,HIGH);
+    digitalWrite(29,LOW);
   }
-  if (digitalRead(sencajon5) == LOW) {
+    if (digitalRead(9) == HIGH) {
     Serial.println("cajon 5 ocupado");
-    digitalWrite(ledrcajon5, HIGH);
-    digitalWrite(ledvcajon5, LOW);
+    digitalWrite(30,LOW);
+    digitalWrite(31,HIGH);
   } else {
-    digitalWrite(ledrcajon5, LOW);
-    digitalWrite(ledvcajon5, HIGH);
+    digitalWrite(30,HIGH);
+    digitalWrite(31,LOW);
   }
-//  if (digitalRead(sencajon6) == LOW) {
-//    Serial.println("cajon 6 ocupado");
-//    digitalWrite(ledrcajon6, HIGH);
-//    digitalWrite(ledvcajon6, LOW);
-//  } else {
-//    digitalWrite(ledrcajon6, LOW);
-//    digitalWrite(ledvcajon6, HIGH);
-//  }
-//  if (digitalRead(sencajon7) == LOW) {
-//    Serial.println("cajon 7 ocupado");
-//    digitalWrite(ledrcajon7, HIGH);
-//    digitalWrite(ledvcajon7, LOW);
-//  } else {
-//    digitalWrite(ledrcajon7, LOW);
-//    digitalWrite(ledvcajon7, HIGH);
-//  }
-//  if (digitalRead(sencajon8) == LOW) {
-//    Serial.println("cajon 8 ocupado");
-//    digitalWrite(ledrcajon8, HIGH);
-//    digitalWrite(ledvcajon8, LOW);
-//  } else {
-//    digitalWrite(ledrcajon8, LOW);
-//    digitalWrite(ledvcajon8, HIGH);
-//  }
-//  if (digitalRead(sencajon9) == LOW) {
-//    Serial.println("cajon 10 ocupado");
-//    digitalWrite(ledrcajon9, HIGH);
-//    digitalWrite(ledvcajon9, LOW);
-//  } else {
-//    digitalWrite(ledrcajon9, LOW);
-//    digitalWrite(ledvcajon9, HIGH);
-//  }
+    if (digitalRead(8) == HIGH) {
+    Serial.println("cajon 6 ocupado");
+    digitalWrite(32,LOW);
+    digitalWrite(33,HIGH);
+  } else {
+    digitalWrite(32,HIGH);
+    digitalWrite(33,LOW);
+  }
+    if (digitalRead(7) == HIGH) {
+    Serial.println("cajon 7 ocupado");
+    digitalWrite(34,LOW);
+    digitalWrite(35,HIGH);
+  } else {
+    digitalWrite(34,HIGH);
+    digitalWrite(35,LOW);
+  }
+    if (digitalRead(6) == HIGH) {
+    Serial.println("cajon 8 ocupado");
+    digitalWrite(36,LOW);
+    digitalWrite(37,HIGH);
+  } else {
+    digitalWrite(36,HIGH);
+    digitalWrite(37,LOW);
+  }
+    if (digitalRead(5) == HIGH) {
+    Serial.println("cajon 9 ocupado");
+    digitalWrite(38,LOW);
+    digitalWrite(39,HIGH);
+  } else {
+    digitalWrite(38,HIGH);
+    digitalWrite(39,LOW);
+  }
 }
