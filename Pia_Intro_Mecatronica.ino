@@ -1,18 +1,20 @@
-#include <LiquidCrystal.h>
-const int rs = 40, en = 41, d4 = 42, d5 = 43, d6 = 44, d7 = 47;
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+#include <LiquidCrystal.h>  //Libreria de pantalla LCD
+#include<Servo.h> //Libreria para controlar Servo motores
+
+const int rs = 40, en = 41, d4 = 42, d5 = 43, d6 = 44, d7 = 47; //Asignacion de pines de pantalla LCD
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7); //Declaracion de la pantalla LCD
 
 unsigned long previousMillis = 0;
 const long interval = 4000;
 bool ledState = LOW;
 
-#include<Servo.h>
-Servo servoEn;
-Servo servoSal;
+Servo servoEn;    //Declaracion de el servo de entrada
+Servo servoSal;   //Declaracion de el servo de salida
 int aa = 0;
-#define totales 9
-int caj[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-int caju = 0;
+int caj[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0}; //Array para monitorear los cajones
+int caju = 0; //Cajones usados
+
+#define totales 9 //Total de cajones en el estacionamiento
 
 #define pinservoEn  2   //Señal PWM para Servo de ENTRADA
 #define pinservoSal 46  //Señal PWM para Servo de SALIDA
@@ -85,7 +87,7 @@ void setup() {
   pinMode(ledvcajon8, OUTPUT);
   pinMode(ledrcajon9, OUTPUT);
   pinMode(ledvcajon9, OUTPUT);
-
+  
   if (digitalRead(sencajon1) == HIGH) {
     aa++;
   }
@@ -129,104 +131,112 @@ void loop() {
     delay(3000);
     servoEn.write(90);
   }
-  if (digitalRead(botonSal) == LOW) {
+  if (aa > 0 && digitalRead(botonSal) == LOW) {
     aa--;
     Serial.println(aa);
     servoSal.write(110);
     delay(3000);
     servoSal.write(20);
-
   }
-  if (digitalRead(sencajon9) == HIGH) {
+  if(aa <= 0 && digitalRead(botonSal) == LOW){
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("ESTACIONAMIENTO");
+    lcd.setCursor(0, 1);
+    lcd.print("VACIO");
+    
+    delay(1000);
+    }
+  if (digitalRead(sencajon1) == HIGH) {
     caj[0] = 1;
-    Serial.println("cajon 1 ocupado");
-    digitalWrite(22, LOW);
-    digitalWrite(23, HIGH);
+    Serial.println("cajon 9 ocupado");
+    digitalWrite(ledvcajon1, LOW);
+    digitalWrite(ledrcajon1, HIGH);
 
   } else {
-    digitalWrite(22, HIGH);
+    digitalWrite(ledvcajon1, HIGH);
     caj[0] = 0;
-    digitalWrite(23, LOW);
+    digitalWrite(ledrcajon1, LOW);
   }
-  if (digitalRead(sencajon8) == HIGH) {
+  if (digitalRead(sencajon2) == HIGH) {
     Serial.println("cajon 2 ocupado");
     caj[1] = 1;
-    digitalWrite(24, LOW);
-    digitalWrite(25, HIGH);
+    digitalWrite(ledvcajon2, LOW);
+    digitalWrite(ledrcajon2, HIGH);
   } else {
-    digitalWrite(24, HIGH);
+    digitalWrite(ledvcajon2, HIGH);
     caj[1] = 0;
-    digitalWrite(25, LOW);
+    digitalWrite(ledrcajon2, LOW);
   }
-  if (digitalRead(sencajon7) == HIGH) {
+  if (digitalRead(sencajon3) == HIGH) {
     caj[2] = 1;
     Serial.println("cajon 3 ocupado");
-    digitalWrite(26, LOW);
-    digitalWrite(27, HIGH);
+    digitalWrite(ledvcajon3, LOW);
+    digitalWrite(ledrcajon3, HIGH);
   } else {
     caj[2] = 0;
-    digitalWrite(26, HIGH);
-    digitalWrite(27, LOW);
+    digitalWrite(ledvcajon3, HIGH);
+    digitalWrite(ledrcajon3, LOW);
   }
-  if (digitalRead(sencajon6) == HIGH) {
+  if (digitalRead(sencajon4) == HIGH) {
     caj[3] = 1;
     Serial.println("cajon 4 ocupado");
-    digitalWrite(28, LOW);
-    digitalWrite(29, HIGH);
+    digitalWrite(ledvcajon4, LOW);
+    digitalWrite(ledrcajon4, HIGH);
   } else {
     caj[3] = 0;
-    digitalWrite(28, HIGH);
-    digitalWrite(29, LOW);
+    digitalWrite(ledvcajon4, HIGH);
+    digitalWrite(ledrcajon4, LOW);
   }
   if (digitalRead(sencajon5) == HIGH) {
     caj[4] = 1;
     Serial.println("cajon 5 ocupado");
-    digitalWrite(30, LOW);
-    digitalWrite(31, HIGH);
+    digitalWrite(ledvcajon5, LOW);
+    digitalWrite(ledrcajon5, HIGH);
   } else {
-    caj[04] = 0;
-    digitalWrite(30, HIGH);
-    digitalWrite(31, LOW);
+    caj[4] = 0;
+    digitalWrite(ledvcajon5, HIGH);
+    digitalWrite(ledrcajon5, LOW);
   }
-  if (digitalRead(sencajon4) == HIGH) {
+  if (digitalRead(sencajon6) == HIGH) {
     caj[5] = 1;
     Serial.println("cajon 6 ocupado");
-    digitalWrite(32, LOW);
-    digitalWrite(33, HIGH);
+    digitalWrite(ledvcajon6, LOW);
+    digitalWrite(ledrcajon6, HIGH);
   } else {
     caj[5] = 0;
-    digitalWrite(32, HIGH);
-    digitalWrite(33, LOW);
+    digitalWrite(ledvcajon6, HIGH);
+    digitalWrite(ledrcajon6, LOW);
   }
-  if (digitalRead(sencajon3) == HIGH) {
+  if (digitalRead(sencajon7) == HIGH) {
     caj[6] = 1;
     Serial.println("cajon 7 ocupado");
-    digitalWrite(34, LOW);
-    digitalWrite(35, HIGH);
+    digitalWrite(ledvcajon7, LOW);
+    digitalWrite(ledrcajon7, HIGH);
   } else {
     caj[6] = 0;
-    digitalWrite(34, HIGH);
-    digitalWrite(35, LOW);
+    digitalWrite(ledvcajon7, HIGH);
+    digitalWrite(ledrcajon7, LOW);
   }
-  if (digitalRead(sencajon2) == HIGH) {
+  if (digitalRead(sencajon8) == HIGH) {
     caj[7] = 1;
     Serial.println("cajon 8 ocupado");
-    digitalWrite(36, LOW);
-    digitalWrite(37, HIGH);
+    digitalWrite(ledvcajon8, LOW);
+    digitalWrite(ledrcajon8, HIGH);
   } else {
     caj[7] = 0;
-    digitalWrite(36, HIGH);
-    digitalWrite(37, LOW);
+    digitalWrite(ledvcajon8, HIGH);
+    digitalWrite(ledrcajon8, LOW);
   }
-  if (digitalRead(sencajon1) == HIGH) {
+  if (digitalRead(sencajon9) == HIGH) {
     caj[8] = 1;
     Serial.println("cajon 9 ocupado");
-    digitalWrite(38, LOW);
-    digitalWrite(39, HIGH);
+    digitalWrite(ledvcajon9, LOW);
+    digitalWrite(ledrcajon9, HIGH);
   } else {
     caj[8] = 0;
-    digitalWrite(38, HIGH);
-    digitalWrite(39, LOW);
+    digitalWrite(ledvcajon9, HIGH);
+    digitalWrite(ledrcajon9, LOW);
   }
   caju = caj[0] + caj[1] + caj[2] + caj[3] + caj[4] + caj[5] + caj[6] + caj[7] + caj[8];
   lcd.setCursor(0, 0);
